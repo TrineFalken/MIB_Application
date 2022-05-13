@@ -1,5 +1,6 @@
 package mibprojekt;
 
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 
 /*
@@ -33,6 +34,8 @@ public class Startsida_Alien extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jButton1 = new javax.swing.JButton();
+        txtAnsvarigAgent = new javax.swing.JTextField();
+        btnTest = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
@@ -41,17 +44,27 @@ public class Startsida_Alien extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1000, 563));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Ändra lösenord");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 131, 73, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 160, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mibprojekt/welcomealien.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-190, 0, -1, -1));
+        txtAnsvarigAgent.setText("jjjjjjjjjjjjjjjjjjjjjjjj");
+        getContentPane().add(txtAnsvarigAgent, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
+
+        btnTest.setText("Visa Agent");
+        btnTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTest, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mibprojekt/Startsida Alien2.png"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -61,6 +74,26 @@ public class Startsida_Alien extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
+            // TODO add your handling code here:
+            ansvarigAgent();
+    }//GEN-LAST:event_btnTestActionPerformed
+    
+    public void ansvarigAgent(){
+        try{
+        String userID = Inlogg.getUserID();
+        String AAID = idb.fetchSingle("SELECT Ansvarig_Agent FROM alien WHERE Alien_ID = '" + userID + "'");
+        String AA = idb.fetchSingle("SELECT Namn FROM agent WHERE Agent_ID = '" + AAID + "'");
+        System.out.println(AA);
+        txtAnsvarigAgent.setText(AA);
+        }
+        catch (Exception ettUndantag){
+                        JOptionPane.showMessageDialog(null, "Something went wrong. Please contact your IT-Administrator.");
+                        System.out.println("InternFelmeddelande:" + ettUndantag.getMessage());
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -98,8 +131,10 @@ public class Startsida_Alien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTest;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JTextField txtAnsvarigAgent;
     // End of variables declaration//GEN-END:variables
 }
