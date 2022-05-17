@@ -122,7 +122,7 @@ public class Inlogg extends javax.swing.JFrame {
                     }
            
                     else if(val ==0 && isAdmin.equals("N")){
-                        new Startsida_Agent().setVisible(true);                     
+                        new Startsida_Agent(idb).setVisible(true);                     
                     }
                     userID = svarID;
                     userLosen = losenord;

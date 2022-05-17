@@ -127,7 +127,7 @@ public class BytLosen extends javax.swing.JFrame {
 
                         else if (Inlogg.getVal()){
                             idb.fetchSingle("UPDATE agent SET Losenord = '" + userNyttPW + "' WHERE Agent_ID = " + userID);
-                            new Startsida_Agent().setVisible(true);
+                            new Startsida_Agent(idb).setVisible(true);
                         }
                         else 
                             System.out.println("something went wrong");

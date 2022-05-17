@@ -1,5 +1,7 @@
 package mibprojekt;
 
+import javax.swing.JOptionPane;
+import oru.inf.InfDB;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,12 +13,14 @@ package mibprojekt;
  * @author trnfa
  */
 public class Startsida_Agent extends javax.swing.JFrame {
-
+    private InfDB idb;
+    private static String omrade;
     /**
      * Creates new form Startsida
      */
-    public Startsida_Agent() {
+    public Startsida_Agent(InfDB idb) {
         initComponents();
+        this.idb = idb;
     }
 
     /**
@@ -28,17 +32,16 @@ public class Startsida_Agent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         txtMIBPortal = new javax.swing.JLabel();
         dropDown = new javax.swing.JComboBox<>();
-        visaKPInfo = new javax.swing.JTextField();
+        lblAgent = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        btnSok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mibprojekt/sotalien.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 195, -1));
 
         txtMIBPortal.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 24)); // NOI18N
         txtMIBPortal.setText("MIB PORTAL");
@@ -46,13 +49,54 @@ public class Startsida_Agent extends javax.swing.JFrame {
 
         dropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "...", "Ändra Lösenord", "Logga ut" }));
         getContentPane().add(dropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 30, -1, -1));
+        getContentPane().add(lblAgent, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 70, 20));
 
-        visaKPInfo.setText("Agent");
-        getContentPane().add(visaKPInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 86, 303, 204));
+        jButton1.setText("Visa Agent");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
+
+        jLabel1.setText("Visa alla Aliens i Område :");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Svealand", "Götaland", "Norrland" }));
+        jComboBox1.setDoubleBuffered(true);
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
+
+        btnSok.setText("Search");
+        btnSok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSokActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+           try {
+           String userID = Inlogg.getUserID();
+           String AID = idb.fetchSingle("SELECT Namn FROM Agent WHERE Agent_ID = '" + userID + "'");
+           lblAgent.setText(AID);
+           }
+           catch (Exception ettUndantag){
+                        JOptionPane.showMessageDialog(null, "Something went wrong. Please contact your IT-Administrator.");
+                        System.out.println("InternFelmeddelande:" + ettUndantag.getMessage());
+           }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSokActionPerformed
+        new Alien_Omrade().setVisible(true);
+        omrade = jComboBox1.getSelectedItem().toString();
+    }//GEN-LAST:event_btnSokActionPerformed
+
+    public static String getOmrade(){
+        return omrade;
+    }
     /**
      * @param args the command line arguments
      */
@@ -86,15 +130,18 @@ public class Startsida_Agent extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Startsida_Agent().setVisible(true);
+               // new Startsida_Agent().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSok;
     private javax.swing.JComboBox<String> dropDown;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAgent;
     private javax.swing.JLabel txtMIBPortal;
-    private javax.swing.JTextField visaKPInfo;
     // End of variables declaration//GEN-END:variables
 }
